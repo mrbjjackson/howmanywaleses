@@ -1,0 +1,39 @@
+@mixin imgrepl {
+    text-indent: -9999px;
+    overflow:hidden;
+    text-decoration:none;
+    border:none;
+
+    &:hover {
+        border:none;
+    }
+  }
+
+.allContainer {
+    display: flex;
+    flex-direction: column;
+    min-height:100vh;
+
+    .pageContainer {
+        flex: 1 0 auto;
+        }
+        
+    footer {
+        flex-shrink: 0;
+    }
+
+    .toggleableMenu {
+        display:none;
+    }
+
+    .mainMenu nav {
+        ul {
+        display:flex;
+        width:100%;
+        max-width:400px;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        }
+    }
+}
+  
