@@ -5,7 +5,6 @@ import { Link } from "gatsby"
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faInstagram, faFacebook, faSpotify } from '@fortawesome/free-brands-svg-icons'
-import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
 
 import "./reset.css"
 import "./style.scss"
@@ -40,13 +39,6 @@ class Header extends Component {
 return (
 <header>
 
-<div className={this.state.toggled ? 'menuOpen toggleableMenu' : 'menuClosed toggleableMenu'}>
-<button className='menuToggle' onClick={this.toggleNav}> <FontAwesomeIcon icon={faBars} /> </button>
-<button className='closeToggle' onClick={this.toggleNav}> <FontAwesomeIcon icon={faTimes} /> </button>
-{navLinks}
-</div>
-
-<div className="mainMenu">{navLinks}</div>
 
 </header>
 )}

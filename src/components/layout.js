@@ -7,11 +7,11 @@
 
 import React from "react"
 import PropTypes from "prop-types"
+import Header from './header'
 import { useStaticQuery, graphql } from "gatsby"
 
-import Header from "./header"
 
-const Layout = ({ children, pageName='default'}) => {
+const Layout = ({ children, pageName='default', showAnswer}) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -22,16 +22,16 @@ const Layout = ({ children, pageName='default'}) => {
     }
   `)
 
+  console.log(showAnswer)
+
   return (
-    <div className="allContainer">
+    <div className={showAnswer ? "allContainer showAnswer" : 'allContainer hideAnswer'}>
       <div className={`pageContainer ${pageName}`}>
-        <Header siteTitle={data.site.siteMetadata.title} />
+      <Header siteTitle={data.site.siteMetadata.title} />
           <main>{children}</main>
       </div>
       <footer>
-            © {new Date().getFullYear()}, Website built by
-            {` `}
-            <a href="mailto:ben@mrbjjackson.com">Mr BJ Jackson</a>
+            © {new Date().getFullYear()}, Website built by <a href="mailto:ben@mrbjjackson.com">Mr BJ Jackson</a> based on a game by invented by Richard in Reading and discovered on the John Robbins and Ellis James radio show.
       </footer>
     </div>
   )

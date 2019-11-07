@@ -9,6 +9,59 @@
     }
   }
 
+body {
+    color:#fff;
+    font-family:'Redressed';
+    font-size:20px;
+}
+
+a {
+    color:white;
+
+}
+
+button {
+    background: #981D1D;
+    border:none;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    padding:12px 28px;
+
+
+    font-family: Redressed;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 40px;
+    line-height: 46px;
+
+    color: #FFFFFF;
+
+    text-shadow: -1px -1px 0px rgba(0, 0, 0, 0.25);
+
+    transition:all 0.2s;
+
+    animation: littleFadeIn 0.5s;
+
+    margin-top:20px;
+    margin-bottom:10px;
+
+    &:hover {
+        margin-top:22px;
+        margin-left:2px;
+        margin-bottom:8px;
+        box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+    }
+
+    &:active {
+        margin-top:24px;
+        margin-left:4px;
+        margin-bottom:4px;
+        box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.25);
+    }
+
+
+}
+
 .allContainer {
     display: flex;
     flex-direction: column;
@@ -16,24 +69,110 @@
 
     .pageContainer {
         flex: 1 0 auto;
+        text-align:center;
+        margin-top:60px;
+        // display:flex;
+        // flex-direction:column;
+        // justify-content: center;
         }
         
     footer {
         flex-shrink: 0;
+        font-family:Arial, Helvetica, sans-serif;
+        font-size:15px;
+        text-align: center;
+        padding-bottom:15px;
     }
 
     .toggleableMenu {
         display:none;
     }
 
-    .mainMenu nav {
-        ul {
-        display:flex;
-        width:100%;
-        max-width:400px;
-        flex-wrap: wrap;
-        justify-content: space-between;
+}
+
+.mainContainer {
+    .formHolder {
+        h2 {
+            font-size:40px;
+            line-height:1.3em;
+            transition:all 0.5s;
+        }
+
+        .countrySelect {
+            max-width:500px;
+            margin:0 auto;
+
+
+            input {
+                font-family: 'Redressed';
+
+            }
+        }
+
+        .country2Holder {
+            display:flex;
+            max-width:500px;
+            margin:10px auto;
+            .countrySelect {
+                flex-basis:90%;
+                margin-left:40px;
+            }
+            .questionMark {
+                display:block;
+                flex-basis:10%;
+                font-size:40px;
+                line-height:70px;
+            }
+        }
+    }
+
+    .showAnswer {
+        .formHolder {
+            h2 {
+                font-size:29px;
+                line-height:1.2em;
+            }
+        }
+    }
+
+    .answerHolder {
+        max-width:600px;
+        margin:0 auto;
+        h4 {
+            text-align:left;
+            font-size:50px;
+        }
+
+        .answerFigures {
+            height:300px;
+            width:300px;
+            border-radius: 150px;
+            background-color:rgba(255,255,255,0.8);
+            display:flex;
+            flex-direction: column;
+            color:black;
+            margin:10px auto;
+            padding:30px;
+            font-size:30px;
+            box-sizing: border-box;
+            justify-content: center;
+            animation: littleFadeIn 0.5s;
+
+            .answerFigure {
+                font-size:70px;
+            }
         }
     }
 }
+
+
+
+
+
+@keyframes littleFadeIn {
+    from {opacity:0}
+    to {opacity:1}
+  }
+
+
   

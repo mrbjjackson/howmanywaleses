@@ -5,8 +5,8 @@ require('dotenv').config({
 
 module.exports = {
   siteMetadata: {
-    title: `EDIT: Title of the site`,
-    description: `EDIT: Description of the site`,
+    title: `How Many Waleses?`,
+    description: `A surface-area-based guessing game `,
     author: `@mrbjjackson`,
   },
   plugins: [
@@ -18,13 +18,21 @@ module.exports = {
         path: `${__dirname}/src/images`,
       },
     },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `data`,
+        path: `${__dirname}/src/data/`,
+      },
+    },
+    `gatsby-transformer-csv`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `EDIT: Name of site`,
-        short_name: `EDIT: Short name`,
+        name: `How Many Waleses`,
+        short_name: `How Many Waleses`,
         start_url: `/`,
         lang: `en`,
         background_color: `#ffffff`,
@@ -37,7 +45,7 @@ module.exports = {
       resolve: 'gatsby-plugin-web-font-loader',
       options: {
         google: {
-          families: ['Roboto:100,100i,400,400i', 'Jomolhari']
+          families: ['Redressed']
         }
       }
     },

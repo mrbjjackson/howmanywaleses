@@ -1,47 +1,290 @@
-import React from "react"
-import { Link } from "gatsby"
+import React, {Component} from "react"
+import Area from '../components/Area'
+import Answer from '../components/Answer'
+import Players from '../components/Players'
 
+import uuid from "uuid"
+
+import { graphql } from 'gatsby'
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
-// import {graphql, useStaticQuery} from 'gatsby'
-// import BackgroundImage from 'gatsby-background-image'
+import BackgroundImage from 'gatsby-background-image'
 
-const IndexPage = () => {
+export default class IndexPage extends Component {
+constructor(props) {
+  super(props)
 
-// const data = useStaticQuery(graphql`
-//   query {
-//       desktop: file(relativePath: { eq: "favicon-icon.png" }) {
-//       childImageSharp {
-//           fluid(quality: 80, maxWidth: 1920) {
-//           ...GatsbyImageSharpFluid_withWebp
-//           }
-//       }
-//       }
-//   }
-//   `)
-// const bgImageData = data.desktop.childImageSharp.fluid
+  const countryData = this.props.data.allCountriesAreasPopulationsGdPsCsv.nodes
+  const randomCountry = countryData[Math.floor(Math.random()*countryData.length)]
 
-return (
-// If you need a full page background image
-// <BackgroundImage
-// Tag="div"
-// className={'bgImage'}
-// fluid={bgImageData}
-// backgroundColor={'#000'}
-// style={{backgroundPositionY: '0' }}
-// > 
+  this.state = {
+      country1: 'WAL',
+      country2: randomCountry.Country_Code,
+      comparison: 'area',
+      showAnswer: false,
+      answerResults: {
+      country1: '',
+      country2: '',
+      ratio: '',
+      comparison: ''
+      },
+      players: []
+  }
 
-  <Layout pageName="home">
-    <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <Link to="/about/">Go to About page</Link>
-  </Layout>
+  this.country1Change = this.country1Change.bind(this)
+  this.country2Change = this.country2Change.bind(this)
+  this.answer = this.answer.bind(this)
+  this.resetRound = this.resetRound.bind(this)
 
-// </BackgroundImage>
-)
+  this.addPlayer = this.addPlayer.bind(this)
+  this.removePlayer = this.removePlayer.bind(this)
+  this.updatePlayerName = this.updatePlayerName.bind(this)
+  this.updatePlayerGuess = this.updatePlayerGuess.bind(this)
+
+
 }
 
-export default IndexPage
+country1Change(newCountry) {
+  this.setState({country1:newCountry})
+}
+
+country2Change(newCountry) {
+  this.setState({country2:newCountry})
+}
+
+
+answer() {
+  const countryData = this.props.data.allCountriesAreasPopulationsGdPsCsv.nodes
+  const country1 = countryData.find((country) => country.Country_Code===this.state.country1)
+  const country2 = countryData.find((country) => country.Country_Code===this.state.country2)
+  let players = this.state.players
+
+  let ratio = country2.Square_km / country1.Square_km
+
+  if(ratio < 1)
+  ratio = Math.round(ratio * 100) / 100
+
+  if(ratio > 1)
+  ratio = Math.round(ratio * 10) / 10
+
+  if(ratio > 15)
+  ratio = Math.round(ratio)
+
+  const answerResults = {
+    country1: country1.Country_Name,
+    country2: country2.Country_Name,
+    ratio: ratio,
+    comparison: this.state.comparison
+  }
+
+  if(players.length === 1 ) {
+    players.forEach(player => {
+      let diff = player.currentGuess - ratio
+      
+      if(diff<0)
+        diff = -1 * diff //make positive
+      
+      answerResults.difference = diff
+
+    })
+  } else if(players.length>1) {
+    let currentBestDiff = ''
+    let currentBestID = ''
+    players.forEach(player => {
+      if(player.currentGuess!=='') {
+        let diff = player.currentGuess - ratio
+        
+        if(diff<0)
+          diff = -1 * diff //make positive
+        
+        if((currentBestDiff==='')||(diff<currentBestDiff)) {
+        currentBestDiff = diff
+        currentBestID = player.id
+        }
+      }
+      //NEED TO MAKE THIS WORK FOR A TIE
+    })
+    
+    players = players.map((player) => {
+      if(player.id===currentBestID) {
+      player.score=player.score+1
+
+      answerResults.winner = player.name 
+      answerResults.difference = currentBestDiff
+      }
+
+      return player
+    })
+
+    this.setState({players:players})
+
+    }
+
+
+
+  this.setState({
+    showAnswer: true,
+    answerResults: answerResults
+  })
+
+}
+
+resetRound() {
+
+  const countryData = this.props.data.allCountriesAreasPopulationsGdPsCsv.nodes
+  let players = []
+  if(this.state.players.length>0) {
+      players = this.state.players.map((player) => {
+      player.currentGuess = ''
+      return player
+    })
+  }
+
+  const randomCountry = countryData[Math.floor(Math.random()*countryData.length)]
+
+  this.setState({
+    country2: randomCountry.Country_Code,
+    showAnswer: false,
+    answerResults: {
+      country1: '',
+      country2: '',
+      ratio: '',
+      comparison: '',
+      winner:'',
+      difference:''
+    },
+    players: players
+  })
+}
+
+addPlayer() {
+
+  const newPlayer = {
+    name:'',
+    score:0,
+    currentGuess:'',
+    id: uuid.v4()
+  }
+
+  const currentPlayers = this.state.players
+
+  currentPlayers.push(newPlayer)
+
+
+  this.setState({players: currentPlayers})
+}
+
+
+
+removePlayer(playerID) {
+
+  let currentPlayers = this.state.players
+
+  currentPlayers = currentPlayers.filter(function(player){
+      return player.id !== playerID;
+  });
+
+  this.setState({players: currentPlayers})
+}
+
+
+updatePlayerName(playerID, e) {
+  let players = this.state.players.map((player) => {
+    if(player.id===playerID) {
+      player.name = e.target.value
+    }
+    return player
+  })
+
+  this.setState({players: players})
+
+}
+
+updatePlayerGuess(playerID, e) {
+  let players = this.state.players.map((player) => {
+    if((player.id===playerID)&&(!isNaN(e.target.value))) {
+      player.currentGuess = e.target.value
+    }
+    return player
+  })
+
+  this.setState({players: players})
+}
+
+
+render() {
+
+  const rawCountries = this.props.data.allCountriesAreasPopulationsGdPsCsv.nodes
+  const bgImageData = this.props.data.file.childImageSharp.fluid
+  console.log(this.state.showAnswer)
+
+  return (
+    <BackgroundImage
+    Tag="div"
+    className='mainContainer'
+    fluid={bgImageData}
+    backgroundColor={'#000'}
+    style={{backgroundPositionY: '0' }}
+    >
+
+    <Layout pageName="home" showAnswer={this.state.showAnswer}>
+    <SEO title="Home" />
+    <h1 style={{display:'none'}}>How Many Waleses</h1>
+
+    <Area
+      rawCountries={rawCountries}
+      country1Change={this.country1Change}
+      country2Change={this.country2Change}
+      country1={this.state.country1}
+      country2={this.state.country2} /> 
+
+    { this.state.showAnswer ?
+    <Answer answerResults={this.state.answerResults} resetRound={this.resetRound} playerCount={this.state.players.length}/> 
+    : <button onClick={this.answer}>Go on, tell me</button>
+    } 
+
+    {/* <Players
+      addPlayer={this.addPlayer}
+      removePlayer={this.removePlayer}
+      updatePlayerName={this.updatePlayerName}
+      updatePlayerGuess={this.updatePlayerGuess}
+      players={this.state.players} /> */}
+
+    </Layout>
+    </BackgroundImage>
+    )
+  }
+}
+
+export const countriesQuery = graphql`
+query MyQuery {
+  allCountriesAreasPopulationsGdPsCsv {
+    nodes {
+      Country_Code
+      Country_Name
+      GDP
+      Population
+      Square_km
+    }
+  }
+  file(relativePath: {eq: "twoSheepBackground.jpeg"}) {
+    childImageSharp {
+      fluid {
+        base64
+        aspectRatio
+        originalImg
+        originalName
+        presentationHeight
+        presentationWidth
+        sizes
+        src
+        srcSet
+        srcSetWebp
+        srcWebp
+      }
+    }
+  }
+}
+`
