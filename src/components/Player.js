@@ -2,14 +2,14 @@ import React from 'react'
 
 export default function Player(props) {
     return (
-        <div>
-            <input type="text" name="playerName" value={props.player.name} onChange={(e) => props.updatePlayerName(props.player.id, e)} placeholder={`Player ${props.playerIndex + 1}`} />
+        <div className="player">
+            <input className="playerName" type="text" name="playerName" value={props.player.name} onChange={(e) => props.updatePlayerName(props.player.id, e)} placeholder={`Player ${props.playerIndex + 1}`} />
 
-            {(props.totalPlayers>1) && <div className="playerScore">Score: {props.player.score}</div>}
+            <input className="playerGuess"  type="text" name="playerGuess" value={props.player.currentGuess} onChange={(e) => props.updatePlayerGuess(props.player.id, e)} placeholder={`Guess`} />
 
-            <input type="text" name="playerGuess" value={props.player.currentGuess} onChange={(e) => props.updatePlayerGuess(props.player.id, e)} placeholder={`Guess`} />
+            {(props.totalPlayers>1) && <div className="playerScore">Score: <div className="scoreFigure">{props.player.score}</div></div>}
 
-            <button onClick={props.removePlayer.bind(this, props.player.id)}>Remove Player</button>
+            <button className="removePlayer" onClick={props.removePlayer.bind(this, props.player.id)}>Remove Player</button>
         </div>
     )
 }

@@ -58,6 +58,9 @@ export default class Area extends Component {
               marginRight:'50px',
               border: state.isFocused ? 'none' : 'none',
               boxShadow: state.isFocused ? 'none' : 'none',
+              '@media screen and (max-width:600px)': {
+                fontSize: '40px',
+              }
             }),
             singleValue: (provided, state) => ({
                 ...provided,
@@ -97,7 +100,10 @@ export default class Area extends Component {
               backgroundColor:'rgba(255,255,255,0.3)',
               border: state.isFocused ? 'none' : 'none',
               boxShadow: state.isFocused ? 'none' : 'none',
-              borderRadius:'20px'
+              borderRadius:'20px',
+              '@media screen and (max-width:600px)': {
+                fontSize: '40px',
+              }
             }),
             singleValue: (provided, state) => ({
                 ...provided,
@@ -127,6 +133,7 @@ export default class Area extends Component {
                 <h2>How many</h2>
 
                     <Select 
+                    isDisabled={this.props.showAnswer}
                     id="country1Select"
                     className="countrySelect"
                     options={country1Options}
@@ -139,6 +146,7 @@ export default class Area extends Component {
 
                 <div className="country2Holder">
                     <Select
+                    isDisabled={this.props.showAnswer}
                     className="countrySelect"
                     id="country2Select"
                     options={country2Options}

@@ -170,6 +170,13 @@ addPlayer() {
 
   const currentPlayers = this.state.players
 
+  if(currentPlayers.length === 0) {
+    newPlayer.name='John'
+  }
+  if(currentPlayers.length === 1) {
+    newPlayer.name='Ellis'
+  }
+
   currentPlayers.push(newPlayer)
 
 
@@ -238,19 +245,20 @@ render() {
       country1Change={this.country1Change}
       country2Change={this.country2Change}
       country1={this.state.country1}
-      country2={this.state.country2} /> 
+      country2={this.state.country2}
+      showAnswer={this.state.showAnswer} /> 
 
     { this.state.showAnswer ?
     <Answer answerResults={this.state.answerResults} resetRound={this.resetRound} playerCount={this.state.players.length}/> 
     : <button onClick={this.answer}>Go on, tell me</button>
     } 
 
-    {/* <Players
+    { <Players
       addPlayer={this.addPlayer}
       removePlayer={this.removePlayer}
       updatePlayerName={this.updatePlayerName}
       updatePlayerGuess={this.updatePlayerGuess}
-      players={this.state.players} /> */}
+      players={this.state.players} /> }
 
     </Layout>
     </BackgroundImage>
