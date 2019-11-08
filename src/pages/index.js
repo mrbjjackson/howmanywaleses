@@ -237,7 +237,6 @@ render() {
 
   const rawCountries = this.props.data.allCountriesAreasPopulationsGdPsCsv.nodes
   const bgImageData = this.props.data.file.childImageSharp.fluid
-  console.log(this.state.showAnswer)
 
   return (
     <BackgroundImage

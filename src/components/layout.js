@@ -22,7 +22,6 @@ const Layout = ({ children, pageName='default', showAnswer}) => {
     }
   `)
 
-  console.log(showAnswer)
 
   return (
     <div className={showAnswer ? "allContainer showAnswer" : 'allContainer hideAnswer'}>
@@ -31,7 +30,7 @@ const Layout = ({ children, pageName='default', showAnswer}) => {
           <main>{children}</main>
       </div>
       <footer>
-            © {new Date().getFullYear()}, Website built by <a href="mailto:ben@mrbjjackson.com">Mr BJ Jackson</a> based on a game by invented by Richard in Reading and discovered on the <a href="https://www.bbc.co.uk/programmes/m0005fdz" target="_blank">Elis James and John Robins radio show</a>.
+            © {new Date().getFullYear()}, Website built by <a href="mailto:ben@mrbjjackson.com">Mr BJ Jackson</a> based on a game by invented by Richard in Reading and discovered on the <a href="https://www.bbc.co.uk/programmes/m0005fdz" target="_blank" rel="noopener noreferrer">Elis James and John Robins radio show</a>.
       </footer>
     </div>
   )
