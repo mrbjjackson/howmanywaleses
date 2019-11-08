@@ -249,7 +249,7 @@ render() {
     >
 
     <Layout pageName="home" showAnswer={this.state.showAnswer}>
-    <SEO title="Home" />
+    <SEO title="How Many Waleses? It's a surface-area-based guessing game" />
     <h1 style={{display:'none'}}>How Many Waleses</h1>
 
     <Area
