@@ -262,6 +262,72 @@ button {
     }
 }
 
+.elisAndJohn {
+    max-width: 300px;
+    margin:0 auto;
+    color:#555;
+
+    animation:bubbleBob 3s infinite;
+
+    .thoughtBubble {
+        background-color:white;
+        border-radius:20px;
+        padding:30px;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        font-size:14px;
+        position: relative;
+
+        &:after {
+            @include imgrepl();
+            background:url('../images/thoughBubble.svg') top left no-repeat transparent;
+            height:60px;
+            width:100px;
+            bottom:-40px;
+            left:20px;
+            position: absolute;
+            display:block;
+            content:'';
+        }
+
+        h3 {
+            font-size:17px;
+            margin-bottom:0.8em;
+            text-decoration: underline;
+        }
+        
+        p {
+            margin-bottom:1em;
+            text-align: left;
+            line-height:1.4em;
+        }
+
+        a {
+            color:#555;
+        }
+
+        strong {
+            font-weight: bold;;
+        }
+
+
+    }
+
+    position: absolute;
+    right:20px;
+    bottom:10px;
+
+    @media screen and (max-width:1185px)  {
+        position: relative;
+        right:auto;
+        bottom:auto;
+    }
+    @media screen and (max-height:680px)  {
+        position: relative;
+        right:auto;
+        bottom:auto;
+    }
+}
+
 
 
 @keyframes littleFadeIn {
@@ -277,6 +343,18 @@ button {
     to {
         opacity:1;
         transform: scale(1);
+    }
+  }
+
+  @keyframes bubbleBob {
+    0% {
+        transform:translateY(0);
+        }
+    50% {
+        transform:translateY(10px);
+    }
+    100% {
+        transform:translateY(0px);
     }
   }
 

@@ -2,6 +2,7 @@ import React, {Component} from "react"
 import Area from '../components/Area'
 import Answer from '../components/Answer'
 import Players from '../components/Players'
+import ElisAndJohn from '../components/ElisAndJohn'
 
 import uuid from "uuid"
 
@@ -270,6 +271,10 @@ render() {
       updatePlayerName={this.updatePlayerName}
       updatePlayerGuess={this.updatePlayerGuess}
       players={this.state.players} /> }
+
+
+
+    <ElisAndJohn />
 
     </Layout>
     </BackgroundImage>
