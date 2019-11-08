@@ -174,7 +174,19 @@ addPlayer() {
     newPlayer.name='John'
   }
   if(currentPlayers.length === 1) {
-    newPlayer.name='Ellis'
+    newPlayer.name='Elis'
+  }  
+  if(currentPlayers.length === 2) {
+    newPlayer.name='Producer Dave'
+  } 
+  if(currentPlayers.length === 3) {
+    newPlayer.name='Richard in Reading'
+  }
+  if(currentPlayers.length === 4) {
+    newPlayer.name='Robin'
+  }
+  if(currentPlayers.length > 4) {
+    newPlayer.name=currentPlayers.length + 1
   }
 
   currentPlayers.push(newPlayer)
