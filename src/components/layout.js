@@ -11,7 +11,7 @@ import Header from './header'
 import { useStaticQuery, graphql } from "gatsby"
 
 
-const Layout = ({ children, pageName='default', showAnswer}) => {
+const Layout = ({ children, pageName='default', showAnswer, shortScreen}) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -25,7 +25,7 @@ const Layout = ({ children, pageName='default', showAnswer}) => {
 
   return (
     <div className={showAnswer ? "allContainer showAnswer" : 'allContainer hideAnswer'}>
-      <div className={`pageContainer ${pageName}`}>
+      <div className={`pageContainer ${pageName} ${shortScreen}`}>
       <Header siteTitle={data.site.siteMetadata.title} />
           <main>{children}</main>
       </div>

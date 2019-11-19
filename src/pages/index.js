@@ -19,7 +19,11 @@ constructor(props) {
   const countryData = this.props.data.allCountriesAreasPopulationsGdPsCsv.nodes
   const randomCountry = countryData[Math.floor(Math.random()*countryData.length)]
 
-  this.state = {
+
+ if (typeof window !== 'undefined' && window.localStorage.getItem('hmwState')) {
+   this.state = JSON.parse(window.localStorage.getItem('hmwState'))
+ } else {
+   this.state = {
       country1: 'WAL',
       country2: randomCountry.Country_Code,
       comparison: 'area',
@@ -32,6 +36,8 @@ constructor(props) {
       },
       players: []
   }
+ }
+
 
   this.country1Change = this.country1Change.bind(this)
   this.country2Change = this.country2Change.bind(this)
@@ -120,8 +126,6 @@ answer() {
     this.setState({players:players})
 
     }
-
-
 
   this.setState({
     showAnswer: true,
@@ -232,21 +236,39 @@ updatePlayerGuess(playerID, e) {
 }
 
 
+componentDidUpdate() {
+}
+
+componentDidMount() {
+   if(typeof window!== 'undefined') {
+      if(window.innerHeight<600)
+         this.setState({shortScreen:true})
+      else
+         this.setState({shortScreen:false})
+   }
+}
+
+
 render() {
 
   const rawCountries = this.props.data.allCountriesAreasPopulationsGdPsCsv.nodes
   const bgImageData = this.props.data.file.childImageSharp.fluid
+  let shortScreen = 'tallScreen'
+
+  if(this.state.shortScreen===true) {
+    shortScreen = 'shortScreen'
+  }
 
   return (
     <BackgroundImage
     Tag="div"
-    className='mainContainer'
+    className="mainContainer"
     fluid={bgImageData}
     backgroundColor={'#000'}
-    style={{backgroundPositionY: '0' }}
+    style={{backgroundPositionY: '0'}}
     >
 
-    <Layout pageName="home" showAnswer={this.state.showAnswer}>
+    <Layout pageName="home" shortScreen={shortScreen} showAnswer={this.state.showAnswer}>
     <SEO title="How Many Waleses? It's a surface-area-based guessing game" />
 
     <Area

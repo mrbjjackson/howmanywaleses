@@ -76,14 +76,7 @@ button {
     .pageContainer {
         text-align:center;
 
-        main {
-         height:100%;
-        display:grid;
-        grid-template-rows: 50% 1fr auto;
-        padding-left: 10px;
-        padding-right: 10px;
-
-         @media screen and (max-height:600px) {
+         &.shortScreen main {
             grid-template-rows: 1fr auto;
             grid-template-columns: 50% 50%;
 
@@ -96,6 +89,14 @@ button {
                }
             }
          }
+
+        main {
+         height:100%;
+        display:grid;
+        grid-template-rows: 50% 1fr auto;
+        padding-left: 10px;
+        padding-right: 10px;
+
         }
 
       }
@@ -110,6 +111,9 @@ button {
         @media screen and (max-width:700px) {
             font-size:11px;
         }
+        @media screen and (max-width:500px) {
+         font-size:10px;
+     }
     }
 
     .toggleableMenu {

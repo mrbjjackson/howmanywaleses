@@ -5,7 +5,7 @@ export default function Player(props) {
         <div className="player">
             <input className="playerName" type="text" name="playerName" value={props.player.name} onChange={(e) => props.updatePlayerName(props.player.id, e)} placeholder={`Player ${props.playerIndex + 1}`} />
 
-            <input className="playerGuess" disabled={props.showAnswer} type="text" name="playerGuess" value={props.player.currentGuess} onChange={(e) => props.updatePlayerGuess(props.player.id, e)} placeholder={`Guess`} />
+            <input className="playerGuess" disabled={props.showAnswer} type="number" name="playerGuess" value={props.player.currentGuess} onChange={(e) => props.updatePlayerGuess(props.player.id, e)} placeholder={`Guess`} />
 
             {(props.totalPlayers>1) && <div className="scoreFigure">{props.player.score}</div>}
 
