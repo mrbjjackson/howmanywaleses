@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Select from 'react-select'
+import Answer from '../components/Answer'
 
 export default class Area extends Component {
     constructor(props) {
@@ -59,8 +60,11 @@ export default class Area extends Component {
               border: state.isFocused ? 'none' : 'none',
               boxShadow: state.isFocused ? 'none' : 'none',
               '@media screen and (max-width:600px)': {
-                fontSize: '40px',
-              }
+                fontSize: '30px',
+              },
+              '@media screen and (max-height:600px)': {
+               fontSize: '30px',
+             }
             }),
             singleValue: (provided, state) => ({
                 ...provided,
@@ -102,8 +106,11 @@ export default class Area extends Component {
               boxShadow: state.isFocused ? 'none' : 'none',
               borderRadius:'20px',
               '@media screen and (max-width:600px)': {
-                fontSize: '40px',
-              }
+                fontSize: '30px',
+              },
+              '@media screen and (max-height:600px)': {
+               fontSize: '30px',
+             }
             }),
             singleValue: (provided, state) => ({
                 ...provided,
@@ -129,36 +136,38 @@ export default class Area extends Component {
 
 
         return (
-            <div className="formHolder">
-                <h2>How many</h2>
+          <div className="formHolder">
+            {this.props.showAnswer && <Answer answerResults={this.props.answerResults} resetRound={this.props.resetRound} playerCount={this.props.playerCount} />}
+            <div className="questionHolder">
+              <h2>How many</h2>
 
-                    <Select 
-                    isDisabled={this.props.showAnswer}
-                    id="country1Select"
-                    className="countrySelect"
-                    options={country1Options}
-                    value={country1Options.find((option) => option.value === this.props.country1)}
-                    onChange={(e) => this.props.country1Change(e.value)}
-                    styles={countrySelect1Style}
-                    />
+              <Select
+                isDisabled={this.props.showAnswer}
+                id="country1Select"
+                className="countrySelect"
+                options={country1Options}
+                value={country1Options.find(option => option.value === this.props.country1)}
+                onChange={e => this.props.country1Change(e.value)}
+                styles={countrySelect1Style}
+              />
 
-                <h2>could you fit in</h2>
+              <h2>could you fit in</h2>
 
-                <div className="country2Holder">
-                    <Select
-                    isDisabled={this.props.showAnswer}
-                    className="countrySelect"
-                    id="country2Select"
-                    options={country2Options}
-                    value={country2Options.find((option) => option.value === this.props.country2)}
-                    onChange={(e) => this.props.country2Change(e.value)}
-                    styles={countrySelect2Style}
-                    />
+              <div className="country2Holder">
+                <Select
+                  isDisabled={this.props.showAnswer}
+                  className="countrySelect"
+                  id="country2Select"
+                  options={country2Options}
+                  value={country2Options.find(option => option.value === this.props.country2)}
+                  onChange={e => this.props.country2Change(e.value)}
+                  styles={countrySelect2Style}
+                />
 
-                    <span className="questionMark">?</span>
-                </div>
-
+                <span className="questionMark">?</span>
+              </div>
             </div>
+          </div>
         )
     }
 }

@@ -31,6 +31,7 @@ render() {
 return (
 <header>
 
+<h1 style={{display:'none'}}>How Many Waleses</h1>
 
 </header>
 )}

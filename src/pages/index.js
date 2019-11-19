@@ -1,6 +1,5 @@
 import React, {Component} from "react"
 import Area from '../components/Area'
-import Answer from '../components/Answer'
 import Players from '../components/Players'
 import ElisAndJohn from '../components/ElisAndJohn'
 
@@ -43,7 +42,6 @@ constructor(props) {
   this.removePlayer = this.removePlayer.bind(this)
   this.updatePlayerName = this.updatePlayerName.bind(this)
   this.updatePlayerGuess = this.updatePlayerGuess.bind(this)
-
 
 }
 
@@ -113,7 +111,7 @@ answer() {
       player.score=player.score+1
 
       answerResults.winner = player.name 
-      answerResults.difference = currentBestDiff
+      answerResults.difference = Math.round(currentBestDiff)
       }
 
       return player
@@ -250,7 +248,6 @@ render() {
 
     <Layout pageName="home" showAnswer={this.state.showAnswer}>
     <SEO title="How Many Waleses? It's a surface-area-based guessing game" />
-    <h1 style={{display:'none'}}>How Many Waleses</h1>
 
     <Area
       rawCountries={rawCountries}
@@ -258,23 +255,32 @@ render() {
       country2Change={this.country2Change}
       country1={this.state.country1}
       country2={this.state.country2}
-      showAnswer={this.state.showAnswer} /> 
+      showAnswer={this.state.showAnswer}
+      answerResults={this.state.answerResults}
+      playerCount={this.state.players.length}
+      resetRound={this.resetRound} /> 
 
-    { this.state.showAnswer ?
-    <Answer answerResults={this.state.answerResults} resetRound={this.resetRound} playerCount={this.state.players.length}/> 
-    : <button onClick={this.answer}>Go on, tell me</button>
-    } 
-
-    { <Players
+{ <Players
       addPlayer={this.addPlayer}
       removePlayer={this.removePlayer}
       updatePlayerName={this.updatePlayerName}
       updatePlayerGuess={this.updatePlayerGuess}
-      players={this.state.players} /> }
+      players={this.state.players}
+      showAnswer={this.state.showAnswer}
+      /> }
+
+   <div className="answerButton">
+    { this.state.showAnswer ?
+      <button onClick={this.resetRound}>Let's have another go then.</button>
+    : <button onClick={this.answer}>Go on, tell me</button>
+    } 
+    </div>
 
 
 
-    <ElisAndJohn />
+
+
+    {/* <ElisAndJohn /> */}
 
     </Layout>
     </BackgroundImage>
@@ -295,19 +301,9 @@ query MyQuery {
   }
   file(relativePath: {eq: "twoSheepBackground.jpeg"}) {
     childImageSharp {
-      fluid {
-        base64
-        aspectRatio
-        originalImg
-        originalName
-        presentationHeight
-        presentationWidth
-        sizes
-        src
-        srcSet
-        srcSetWebp
-        srcWebp
-      }
+      fluid(maxWidth: 1000, quality: 65) {
+         ...GatsbyImageSharpFluid
+       }
     }
   }
 }
