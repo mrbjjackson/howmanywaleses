@@ -68,29 +68,47 @@ button {
 }
 
 .allContainer {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     min-height:100vh;
+   grid-template-rows: auto 50px ;
+
 
     .pageContainer {
-        flex: 1 0 auto;
         text-align:center;
-        margin-top:60px;
-        // display:flex;
-        // flex-direction:column;
-        // justify-content: center;
+
+        main {
+         height:100%;
+        display:grid;
+        grid-template-rows: 50% 1fr auto;
+        padding-left: 10px;
+        padding-right: 10px;
+
+         @media screen and (max-height:600px) {
+            grid-template-rows: 1fr auto;
+            grid-template-columns: 50% 50%;
+
+            .answerButton {
+               grid-column: 1 / span 2;
+
+               button {
+                  font-size:30px;
+                  padding: 5px 17px;
+               }
+            }
+         }
         }
+
+      }
         
     footer {
-        flex-shrink: 0;
         font-family:Arial, Helvetica, sans-serif;
-        font-size:15px;
+        font-size:13px;
         text-align: center;
-        padding-bottom:15px;
         line-height:1.2em;
+        padding-top:20px;
 
         @media screen and (max-width:700px) {
-            font-size:12px;
+            font-size:11px;
         }
     }
 
@@ -102,11 +120,30 @@ button {
 
 .mainContainer {
     .formHolder {
+       display:grid;
+       height:100%;
+       grid-template-rows:1fr;
+       justify-items: center;
+
+       .questionHolder, .answerHolder {
+         grid-column: 1;
+         grid-row: 1;
+         align-self: center;
+       }
+       .questionHolder {
+          width:100%;
+       }
+
         h2 {
             font-size:40px;
             line-height:1.3em;
             transition:all 0.5s;
+
+         @media screen and (max-height:600px) {
+            font-size:25px;
+         }
         }
+
 
         .countrySelect {
             max-width:500px;
@@ -128,29 +165,33 @@ button {
                 margin-left:40px;
             }
             .questionMark {
-                display:block;
-                flex-basis:10%;
-                font-size:40px;
-                line-height:70px;
+               display: block;
+               flex-basis: 10%;
+               font-size: 30px;
+               line-height: 45px;
             }
         }
     }
 
     .showAnswer {
-        .formHolder {
-            h2 {
-                font-size:29px;
-                line-height:1.2em;
-            }
-        }
+      .questionHolder {
+         filter:blur(3px);
+      }
     }
 
     .answerHolder {
         max-width:600px;
-        margin:0 auto 30px;
+        z-index: 1;
+
+
         h4 {
             text-align:left;
             font-size:50px;
+
+            @media screen and (max-height:600px) {
+               text-align:center;
+            font-size:20px;
+            }
         }
 
         .answerFigures {
@@ -170,94 +211,150 @@ button {
 
             .answerFigure {
                 font-size:70px;
+
+                @media screen and (max-height:600px) {
+               font-size:40px;
+               }
+            }
+
+            @media screen and (max-height:600px) {
+               max-width:180px;
+
+            font-size:20px;
+            height:180px;  
             }
         }
     }
 }
 
 .playersHolder {
+   position:relative;
+   align-self: end;
     button.newPlayer {
         background-color: #076B05;
         font-size: 21px;
         padding: 9px 15px;
         line-height: 1.5em;
-        margin-bottom: 25px;
-
+        margin:0;
+      margin-top:-15px;
+      z-index: 1;
+      position: relative;
 
         &:hover {
-            margin-bottom:23px;
         }
     }
 
     .allPlayers {
-        display:flex;
-        justify-content: center;
-        flex-wrap: wrap;
+      background: #E8DFDC;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      border-radius: 10px;
+      padding:20px;
+      margin:0 auto 0;
+      max-width:600px;
+      font-size:18px;
+      max-height:30vh;
+      overflow-y:scroll;
+      box-sizing: border-box;
+
+      @media screen and (max-height:600px) {
+      margin: 0 16px;
+      max-height:50vh;
+      }
+
+      .playerNameHeader, .playerGuessHeader, .playerScoreHeader{
+         display:inline-block;
+         color:black;
+         text-align: left;
+         padding-left:5px;
+         box-sizing: border-box;
+         font-size:25px;
+      }
+      .playersHeaders {
+      text-align: left;
+      margin-bottom:0.5em;
+      }
+      .playerNameHeader {
+         width:50%;
+      }
+      .playerGuessHeader {
+         width:25%;
+      }
+      .playerScoreHeader {
+         width:20%;
+         text-align: center;
+      }
 
         .player {
-            background: #E8DFDC;
-            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-            border-radius: 30px;
-            max-width:200px;
-            min-height:150px;
-            padding:60px 30px;
-            margin:0 20px 20px;
-            position: relative;
             animation: dropFade 0.3s;
+            position:relative;
+            text-align: left;
 
             button.removePlayer {
-                @include imgrepl;
-                position: absolute;
-                height:30px;
-                width:30px;
-                padding:0;
-                margin:0 ;
-                top:15px;
-                right:15px;
-                background-color:transparent;
-                box-shadow: none;
-
+               text-indent: -9999px;
+               overflow: hidden;
+               text-decoration: none;
+               border: none;
+               position: absolute;
+               height: 20px;
+               width: 16px;
+               padding: 0;
+               margin: 0;
+               margin-top: 0px;
+               right: 15px;
+               top: 5px;
+               background-color: transparent;
+               box-shadow: none;
+               overflow:visible;
 
                 &:after {
                     content: '\00d7';
                     position: absolute;
                     top: 0px;
-                    right: 16px;
+                    right: -20px;
                     color: grey;
                     text-indent: 0;
                     font-family: sans-serif;
-                    font-size: 25px;
-                    line-height: 1em;
-                    text-shadow:none;
+                    font-size: 24px;
+                    line-height: 0.8em;
+                    text-shadow: none;
 
                 }
             
             }
 
-            input.playerName, input.playerGuess {
+            input.playerName, input.playerGuess{
                 border:none;
                 border-bottom:1px solid #999;
                 background-color:rgba(255,255,255,0.6);
-                padding:10px;
+                padding:0px;
                 border-radius:5px;
                 margin-bottom:10px;
-                text-align: center;
+                text-align: left;
                 font-family: 'Redressed';
-                font-size:30px;
-                max-width:100%;
+                font-size:20px;
                 box-sizing: border-box;
+                display:inline-block;
+                padding:5px;
             }
-        
-            .playerScore{
-                margin-top:15px;
-                font-size:30px;
-                color:black;
-                .scoreFigure {
-                    margin:10px;
-                    font-size:40px;
-                }
+            
+            input.playerName {
+               width:45%;
+               background-color:transparent;
+               margin-right:5%;
+            }
 
+            input.playerGuess {
+               width:23%;
+               margin-right:2%;
             }
+
+            .scoreFigure {
+               width:20%;
+               display: inline-block;
+               color:black;
+               text-align: center;
+            }
+            
         }
     }
 }
