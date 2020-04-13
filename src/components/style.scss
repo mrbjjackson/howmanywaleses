@@ -429,11 +429,13 @@ button {
     bottom:10px;
 
     @media screen and (max-width:1185px)  {
+      display:none;
         position: relative;
         right:auto;
         bottom:auto;
     }
     @media screen and (max-height:680px)  {
+      display:none;
         position: relative;
         right:auto;
         bottom:auto;

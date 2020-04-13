@@ -302,7 +302,7 @@ render() {
 
 
 
-    {/* <ElisAndJohn /> */}
+    <ElisAndJohn />
 
     </Layout>
     </BackgroundImage>
